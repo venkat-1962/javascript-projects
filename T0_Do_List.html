@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sticky Notes App</title>
+    <!-- Importing DM Serif Font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Task 02: Set Arial font for the entire page */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Center the contents on the page */
+        body {
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+            background-color: #e0e0e0; /* Page background to make the main container pop */
+        }
+
+        /* Task 02: Background color #f1f1f1, slight shadow effect */
+        .app-container {
+            background-color: #f1f1f1;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 40px;
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        /* Task 02: 'DM Serif' cursive font for heading and color #333 */
+        h1 {
+            font-family: 'DM Serif Display', cursive, serif;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+        }
+
+        /* Input section spacing */
+        .input-section {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        /* Task 04: Style text area - large, background #fefec0 */
+        textarea {
+            width: 70%;
+            height: 120px;
+            background-color: #fefec0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            padding: 15px;
+            font-size: 16px;
+            resize: vertical;
+        }
+
+        /* Task 04: Add button - color #11ff00, grow on hover */
+        .add-btn {
+            background-color: #11ff00;
+            color: #333;
+            border: none;
+            border-radius: 6px;
+            width: 60px;
+            height: 60px;
+            font-size: 30px;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .add-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Notes container layout */
+        .notes-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        /* Individual Sticky Note styling */
+        .note {
+            width: 220px;
+            min-height: 220px;
+            padding: 20px;
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            word-wrap: break-word;
+        }
+
+        /* Task 03: Alternate background colors */
+        .note-bg-1 {
+            background-color: #d1e1ff;
+        }
+
+        .note-bg-2 {
+            background-color: #fefffe;
+        }
+
+        /* Task 04: "X" button - top right corner, rounded corners, background #e54b3a */
+        .delete-btn {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: #e54b3a;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .delete-btn:hover {
+            background-color: #d63d2b;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Task 01: Heading Sticky Notes -->
+        <h1>Sticky Notes</h1>
+        
+        <div class="input-section">
+            <!-- Task 01: Text area with placeholder -->
+            <textarea id="note-input" placeholder="Type a new note..."></textarea>
+            <!-- Task 01: Button with '+' symbol -->
+            <button id="add-btn" class="add-btn">+</button>
+        </div>
+
+        <div id="notes-container" class="notes-container">
+            <!-- New notes will be injected here by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        const noteInput = document.getElementById('note-input');
+        const addBtn = document.getElementById('add-btn');
+        const notesContainer = document.getElementById('notes-container');
+        
+        // Keep track of notes to alternate colors
+        let noteCounter = 0;
+
+        // Task 03: Create a new sticky note on '+' click
+        addBtn.addEventListener('click', () => {
+            const noteText = noteInput.value.trim();
+            
+            if (noteText !== '') {
+                createNote(noteText);
+                noteInput.value = ''; // Clear text area after adding
+            }
+        });
+
+        function createNote(text) {
+            // Create note wrapper
+            const noteDiv = document.createElement('div');
+            noteDiv.classList.add('note');
+
+            // Task 03: Alternate colors between #d1e1ff and #fefffe
+            if (noteCounter % 2 === 0) {
+                noteDiv.classList.add('note-bg-1');
+            } else {
+                noteDiv.classList.add('note-bg-2');
+            }
+            noteCounter++;
+
+            // Note text
+            const textElement = document.createElement('p');
+            textElement.textContent = text;
+
+            // Task 03 & 04: "X" Delete button
+            const deleteBtn = document.createElement('button');
+            deleteBtn.textContent = 'X';
+            deleteBtn.classList.add('delete-btn');
+            
+            // Delete functionality
+            deleteBtn.addEventListener('click', () => {
+                notesContainer.removeChild(noteDiv);
+            });
+
+            // Append elements
+            noteDiv.appendChild(deleteBtn);
+            noteDiv.appendChild(textElement);
+            notesContainer.appendChild(noteDiv);
+        }
+    </script>
+</body>
+</html>
