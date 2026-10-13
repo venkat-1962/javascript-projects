@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sticky Notes</title>
+</head>
+<body>
+    <div class="page-div" id="page-div">
+        <h1>Sticky Notes</h1>
+        <div class="input-div" id="input-div">
+            <textarea name="Input Box" id="input" placeholder="Type a new note..."></textarea>
+            <button id="add">+</button>
+        </div>
+        <div class="Notes-div" id="Notes-div">
+
+        </div>
+    </div>
+        
+</body>
+</html>
+<script>
+    let input=document.getElementById('input-div');
+    let text=document.getElementById('input');
+    let add=document.getElementById('add');
+    let notes=document.getElementById('Notes-div');
+    let i=0;
+    let heading=document.querySelector('h1');
+    heading.style.fontFamily="Arial"
+    add.addEventListener('click', ()=>{createNote(text.value)
+        text.value='';
+    });
+    function createNote(text){
+        if(text===""){
+            return;
+        }
+        let note=document.createElement('div');
+        let cancel=document.createElement('button');
+        note.classList.add('note');
+        cancel.classList.add('delete');
+        note.innerText=text;
+        if((i=i+1)%2===0){
+            note.style.backgroundColor="#d1e1ff";
+        }
+        else{
+            note.style.backgroundColor="#fefffe";
+        }
+        cancel.innerText="x";
+        cancel.addEventListener('click',()=>{note.remove()});
+        note.appendChild(cancel);
+        notes.appendChild(note);
+    }
+</script>
+
+<style>
+    * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+    body {
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+            background-color: #e0e0e0; 
+        }
+    .page-div {
+            background-color: #887b7b;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 40px;
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
+        }
+    h1 {
+            font-family: 'DM Serif Display', cursive, serif;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+        }
+    #input-div {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            
+        }
+
+    textarea {
+            width: 70%;
+            height: 120px;
+            background-color: #fefec0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            padding: 15px;
+            font-size: 16px;
+            resize: vertical;
+        }
+
+    #add {
+            background-color: #11ff00;
+            color: #333;
+            border: none;
+            border-radius: 6px;
+            width: 60px;
+            height: 60px;
+            font-size: 30px;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+    #add:hover {
+            transform: scale(1.1);
+        }
+
+    #Notes-div {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+    .note {
+            width: 220px;
+            min-height: 220px;
+            padding: 20px;
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            word-wrap: break-word;
+        }
+
+    .delete {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: #e54b3a;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+    .delete:hover {
+            background-color: #d63d2b;
+        }
+
+</style>

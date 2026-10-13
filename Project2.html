@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=
+    , initial-scale=1.0">
+    <title>Wordle Game</title>
+</head>
+<body>
+    <div class="Page-div">
+        <div class="game-div">
+            <h1 id="name">Wordle Game</h1>
+
+            <div class="input-div">
+                <input type="text" id="input-box" maxlength="5">
+                <button id="submit" >Submit Guess</button>
+            </div>
+            <p id="message"></p>
+        </div>
+    </div>
+    
+</body>
+</html>
+<style>
+    .Page-div{
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #988c8c;
+        align-items: center;
+        padding: 100px 100px;
+    }
+    .game-div{
+        justify-content: center;
+        align-items: center;
+        background-color: #f4f4f4;
+        padding-left: 450px;
+        padding-right: 350px;
+        padding-top: 100px;
+        
+    }
+    #name{
+        align-content: center;
+        font-weight: bolder;
+        font-size: 60px;
+    }
+    .input-div{
+        padding-bottom: 10px;
+        align-self: center;
+    }
+    p{
+        padding-bottom: 50px;
+        text-align: justify;
+        font-size: x-large;
+    }
+    #input-box{
+        width: 200px;
+        height: 30px;
+        font-size: x-large;
+    }
+    .box1{
+        border: solid;
+        margin : 10px;
+        width : 50px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    .box2{
+        border: solid;
+        margin : 10px;
+        width : 50px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    .box3{
+        border: solid;
+        margin : 10px;
+        width : 50px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    .box4{
+        border: solid;
+        margin : 10px;
+        width : 50px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    .box5{
+        border: solid;
+        margin : 10px;
+        width : 50px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    .box6{
+        border: solid;
+        margin : 10px;
+        width : 50px;
+        height: 50px;
+        color: black;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    button{
+        width: 150px;
+        height: 40px;
+        font-size: medium;
+        font-weight: bold;
+        background-color: rgb(87, 83, 79);
+        color: aliceblue;
+    }
+</style>
+<script>
+    const words = [
+    "which", "there", "their", "about", "would", "these", "other", "words", "could", "write", "first", "water",
+    "after", "where", "right", "think", "three", "years", "place", "sound", "great", "again", "still", "every",
+    "small", "found", "those", "never", "under", "might", "while", "house", "world", "below", "asked", "going",
+    "large", "until", "along", "shall", "being", "often", "earth", "began", "since", "study", "night", "light",
+    "above", "paper", "parts", "young", "story", "point", "times", "heard", "whole", "white", "given", "means",
+    "music", "miles", "thing", "today", "later", "using", "money", "lines", "order", "group", "among", "learn",
+    "known", "space", "table", "early", "trees", "short", "hands", "state", "black", "shown", "stood", "front",
+    "voice", "kinds", "makes", "comes", "close", "power", "lived", "vowel", "taken", "built", "heart", "ready",
+    "quite", "class", "bring", "round", "horse", "shows", "piece", "green", "stand", "birds", "start", "river",
+    "tried", "least", "field", "whose", "girls", "leave", "added", "color", "third", "hours", "moved", "plant",
+    "doing", "names", "forms", "heavy", "ideas", "cried", "check", "floor", "begin", "woman", "alone", "plane",
+    "spell", "watch", "carry", "wrote", "clear", "named", "books", "child", "glass", "human", "takes", "party",
+    "build", "seems", "blood", "sides", "seven", "mouth", "solve", "north", "value", "death", "maybe", "happy",
+    "tells", "gives", "looks", "shape", "lives", "steps", "areas", "sense", "speak", "force", "ocean", "speed",
+    "women", "metal", "south", "grass", "scale", "cells", "lower", "sleep", "wrong", "pages", "ships", "needs",
+    "rocks", "eight", "major", "level", "total", "ahead", "reach", "stars", "store", "sight", "terms", "catch",
+    "works", "board", "cover", "songs", "equal", "stone", "waves", "guess", "dance", "spoke", "break", "cause",
+    "radio", "weeks", "lands", "basic", "liked", "trade", "fresh", "final", "fight", "meant", "drive", "spent",
+    "local", "waxes", "knows", "train", "bread", "homes", "teeth", "coast", "thick", "brown", "clean", "quiet",
+    "sugar", "facts", "steel", "forth", "rules", "notes", "units", "peace", "month", "verbs", "seeds", "helps",
+    "sharp", "visit", "woods", "chief", "walls", "cross", "wings", "grown", "cases", "foods", "crops", "fruit",
+    "stick", "wants", "stage", "sheep", "nouns", "plain", "drink", "bones", "apart", "turns", "moves", "touch",
+    "angle", "based", "range", "marks", "tired", "older", "farms", "spend", "shoes", "goods", "chair", "twice",
+    "cents", "empty", "alike", "style", "broke", "pairs", "count", "enjoy", "score", "shore", "roots", "paint",
+    "heads", "shook", "serve", "angry", "crowd", "wheel", "quick", "dress", "share", "alive", "noise", "solid",
+    "cloth", "signs", "hills", "types", "drawn", "worth", "truck", "piano", "upper", "loved", "usual", "faces",
+    "drove", "cabin", "boats", "towns", "proud", "court", "model", "prime", "fifty", "plans", "yards", "prove",
+    "tools", "price", "sheet", "smell", "boxes", "raise", "match", "truth", "roads", "threw", "enemy", "lunch",
+    "chart", "scene", "graph", "doubt", "guide", "winds", "block", "grain", "smoke", "mixed", "games", "wagon",
+    "sweet", "topic", "extra", "plate", "title", "knife", "fence", "falls", "cloud", "wheat", "plays", "enter",
+    "broad", "steam", "atoms", "press", "lying", "basis", "clock", "taste", "grows", "thank", "storm", "agree",
+    "brain", "track", "smile", "funny", "beach", "stock", "hurry", "saved", "sorry", "giant", "trail", "offer",
+    "ought", "rough", "daily", "avoid", "keeps", "throw", "allow", "cream", "laugh", "edges", "teach", "frame",
+    "bells", "dream", "magic", "occur", "ended", "chord", "false", "skill", "holes", "dozen", "brave", "apple",
+    "climb", "outer", "pitch", "ruler", "holds", "fixed", "costs", "calls", "blank", "staff", "labor", "eaten",
+    "youth", "tones", "honor", "globe", "gases", "doors", "poles", "loose", "apply", "tears", "exact", "brush",
+    "chest", "layer", "whale", "minor", "faith", "tests", "judge", "items", "worry", "waste", "hoped", "strip",
+    "begun", "aside", "lakes", "bound", "depth", "candy", "event", "worse", "aware", "shell", "rooms", "ranch",
+    "image", "snake", "aloud", "dried", "likes", "motor", "pound", "knees", "refer", "fully", "chain", "shirt",
+    "flour", "drops", "spite", "orbit", "banks", "shoot", "curve", "tribe", "tight", "blind", "slept", "shade",
+    "claim", "flies", "theme", "queen", "fifth", "union", "hence", "straw", "entry", "issue", "birth", "feels",
+    "anger", "brief", "rhyme", "glory", "guard", "flows", "flesh", "owned", "trick", "yours", "sizes", "noted",
+    "width", "burst", "route", "lungs", "uncle", "bears", "royal", "kings", "forty", "trial", "cards", "brass",
+    "opera", "chose", "owner", "vapor", "beats", "mouse", "tough", "wires", "meter", "tower", "finds", "inner",
+    "stuck", "arrow", "poems", "label", "swing", "solar", "truly", "tense", "beans", "split", "rises", "weigh",
+    "hotel", "stems", "pride", "swung", "grade", "digit", "badly", "boots", "pilot", "sales", "swept", "lucky",
+    "prize", "stove", "tubes", "acres", "wound", "steep", "slide", "trunk", "error", "porch", "slave", "exist",
+    "faced", "mines", "marry", "juice", "raced", "waved", "goose", "trust", "fewer", "favor", "mills", "views",
+    "joint", "eager", "spots", "blend", "rings", "adult", "index", "nails", "horns", "balls", "flame", "rates",
+    "drill", "trace", "skins", "waxed", "seats", "stuff", "ratio", "minds", "silly", "coins", "hello", "trips"];
+
+    let container=document.querySelector('.game-div');
+    let inputBox=document.querySelector('#input-box');
+    let submit=document.querySelector('#submit');
+    let input=document.querySelector('.input-div')
+    let result=words[Math.floor(Math.random()*600)];
+    let message=document.querySelector('#message');
+    for(let i=1;i<7;i++){
+        let newContainer=document.createElement('div');
+        newContainer.classList.add(`container${i}`);
+        newContainer.style.display= "flex";
+        for(let j=0;j<5;j++){
+            let newbox=document.createElement('div');
+            newbox.classList.add(`box${i}`);
+            newContainer.appendChild(newbox);
+        }
+        container.insertBefore(newContainer, input);
+    }
+    let attempt=0;
+    submit.addEventListener('click',()=>{
+        attempt++;
+        addLetters(inputBox.value);
+        inputBox.value='';
+    });
+    function addLetters(text){
+        let boxes=Array.from(document.querySelectorAll(`.box${attempt}`));
+        let guessedLetters=Array.from(text);
+        let actualLetters=Array.from(result);
+        let i=0;
+        let correctLetters=0;
+        boxes.forEach(box =>{
+            box.textContent=`${guessedLetters[i].toUpperCase()}`;
+            if(guessedLetters[i]===actualLetters[i]){
+                correctLetters++;
+                box.style.color= 'white';
+                box.style.backgroundColor= 'green';
+            }
+            else if(actualLetters.includes(guessedLetters[i])){
+                box.style.color= 'black'
+                box.style.backgroundColor= 'yellow';
+            }
+            else{
+                box.style.color= 'white'
+                box.style.backgroundColor= 'grey';
+            }
+            if(correctLetters==5){
+                message.textContent= "Congratulations! You guessed the word. To play again refresh the page";
+                submit.removeEventListener();
+            }
+            i++;
+        })
+        if(attempt==6 &&correctLetters!=5){
+            container.style.backgroundColor="red";
+            message.textContent=` Sorry! You were not able guess the word.
+            To play again refresh the page`;
+            submit.removeEventListener();
+        }
+    }
+
+</script>
