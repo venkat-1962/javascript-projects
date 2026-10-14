@@ -68,10 +68,18 @@
       color: tomato;
     }
 
-    .grid-cell img {
+    .img {
       width: 100%;
       height: 100%;
       object-fit: contain;
+      display: none;
+    }
+    .ok{
+      height: 100px;
+      width: 100px;
+      background-color: blue;
+      color: white;
+      border-radius: 25%;
     }
 
     .reset-btn {
@@ -98,6 +106,10 @@
       <li>There are 5 ships hidden in the game.</li>
       <li>You win if you can find all ships in less than 8 clicks, else you lose.</li>
     </ol>
+    <dialog class="dialogue">
+      <h1></h1>
+      <button class="ok" id="ok">OK</button>
+    </dialog>
   </div>
 
   <div class="flex-grid">
@@ -110,7 +122,7 @@
 </html>
 <script>
     let container=document.querySelector('.flex-grid');
-    
+    let dialogue=document.querySelector('.dialogue');
     for(let i=0;i<16;i++){
         let cell=document.createElement('div');
         cell.classList.add('grid-cell');
@@ -121,6 +133,7 @@
     while(i<5){
         let ship=document.createElement('img');
         ship.src="https://ik.imagekit.io/d9mvewbju/Course/BigbinaryAcademy/battleship-image_e6bWCZ1w4.png";
+        ship.classList.add('img','ship');
         let random=Math.floor(Math.random()*16);
         //console.log(random);
         console.log(gridCell[random].children.length);
@@ -132,8 +145,32 @@
     for(i=0;i<16;i++){
         let ocean=document.createElement('img');
         ocean.src="https://ik.imagekit.io/d9mvewbju/Course/BigbinaryAcademy/seamless-pattern-waves-various-shades-blue-vector-underwater-design-96891651_aSd5pmbaM.webp";
+        ocean.classList.add("img","ocean");
         if(gridCell[i].children.length===0){
             gridCell[i].appendChild(ocean);
         }
     }
+    let shipCount=0;
+    let attempt=0;
+    function manageGame(event){
+      attempt++;
+      if(event.target.classList.contains('grid-cell')){
+        event.target.firstElementChild.style.display="block";
+      }
+      if(event.target.firstElementChild.classList.contains('ship')){
+        shipCount++;
+      }
+      console.log(shipCount+""+attempt);
+      if(shipCount===5&&attempt!==8){
+        dialogue.firstElementChild.style.textContent=="YOU WON";
+        dialogue.show();
+        container.removeEventListener('click', manageGame);
+      }
+      else if(attempt===8&&shipCount!==5){
+        dialogue.firstElementChild.style.innerText=="YOU LOST";
+        dialogue.show();
+        container.removeEventListener('click', manageGame);
+      }
+    }
+    container.addEventListener('click',manageGame);
 </script>
